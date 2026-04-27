@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>عالم الثدييات | Mammals World</title>
+    <!-- External CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.25s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Inter', system-ui, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.55;
+            padding: 0;
+        }
+
+        /* Light Mode */
+        :root {
+            --bg-primary: #f9fafb;
+            --bg-surface: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --border-light: #e5e7eb;
+            --accent: #2c7a4d;
+            --accent-hover: #1f5e3a;
+            --header-bg: #ffffffcc;
+            --shadow-sm: 0 12px 24px rgba(0, 0, 0, 0.05);
+            --footer-bg: #f3f4f6;
+            --placeholder-bg: #e9ecef;
+        }
+
+        body.dark {
+            --bg-primary: #0f172a;
+            --bg-surface: #1e293b;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border-light: #334155;
+            --accent: #4ade80;
+            --accent-hover: #22c55e;
+            --header-bg: #0f172acc;
+            --footer-bg: #111827;
+            --placeholder-bg: #334155;
+            --shadow-sm: 0 12px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        body, .container, .hero-section, .cards-grid, .card-content, .poll-section, footer {
+            text-align: center;
+        }
+
+        .main-nav ul, .footer-col ul {
+            justify-content: center;
+        }
+
+        /* ========== HEADER ========== */
+        .site-header {
+            background: var(--header-bg);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+        }
+
+        .header-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 0;
+            gap: 1rem;
+        }
+
+        .logo-area h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), #3b82f6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .logo-area p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .main-nav {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.9rem;
+            list-style: none;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            padding: 0.3rem 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        .main-nav a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .theme-toggle {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 60px;
+            padding: 0.5rem 1.2rem;
+            cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        /* Hero section */
+        .hero-section {
+            position: relative;
+            background-image: url('images/background-mammals.jpg');
+            background-size: cover;
+            background-position: center 50%;
+            background-repeat: no-repeat;
+            border-radius: 32px;
+            margin: 1.5rem 0 1rem;
+            padding: 2.8rem 1rem;
+            isolation: isolate;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 32px;
+            z-index: -1;
+        }
+
+        .hero-section h2,
+        .hero-section p {
+            position: relative;
+            z-index: 2;
+            color: white;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+        }
+
+        body.dark .hero-section::before {
+            background: rgba(0, 0, 0, 0.65);
+        }
+
+        .hero-section h2 {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            font-weight: 800;
+        }
+
+        .hero-section p {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2.5rem 0 3rem;
+        }
+
+        .animal-card {
+            background: var(--bg-card);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .animal-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 210px;
+            background-color: var(--placeholder-bg);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-content {
+            padding: 1.5rem 1.5rem 1.8rem;
+            flex: 1;
+        }
+
+        .animal-name {
+            font-size: 1.7rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+
+        .description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.3rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .read-more i {
+            font-size: 0.8rem;
+            transition: transform 0.2s;
+        }
+
+        .read-more:hover {
+            gap: 12px;
+            color: var(--accent-hover);
+        }
+
+        /* Poll section */
+        .poll-section {
+            background: var(--bg-surface);
+            border-radius: 32px;
+            padding: 1.8rem;
+            margin: 2rem 0 1.5rem;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .poll-section h3 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .poll-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0 1rem;
+        }
+
+        .poll-options label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-primary);
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .vote-btn {
+            background: var(--accent);
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 0.6rem 1.8rem;
+            border-radius: 40px;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+
+        .vote-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(0.97);
+        }
+
+        /* Most voted animal section */
+        .most-voted {
+            background: linear-gradient(135deg, var(--bg-surface), var(--bg-primary));
+            border-radius: 32px;
+            padding: 1.5rem;
+            margin: 1rem 0 2rem;
+            border: 2px solid var(--accent);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .most-voted h4 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 0.5rem;
+        }
+
+        .most-voted p {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: var(--accent);
+            display: inline-block;
+            padding: 0.3rem 1.5rem;
+            border-radius: 60px;
+            color: white;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        .site-footer {
+            background: var(--footer-bg);
+            border-top: 1px solid var(--border-light);
+            padding: 2rem 0 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .footer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.8rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-light);
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 850px) {
+            .header-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .main-nav {
+                order: 2;
+            }
+            .theme-toggle {
+                margin: 0 auto;
+                order: 3;
+                width: fit-content;
+            }
+            .logo-area {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .container {
+                padding: 0 16px;
+            }
+            .card-content {
+                padding: 1rem;
+            }
+            .animal-name {
+                font-size: 1.45rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-header">
+        <div class="container header-wrapper">
+            <div class="logo-area">
+                <h1>🐾 حيواناتي </h1>
+                <p> My animals | معلومات سريعة وموثوقة</p>
+            </div>
+            <nav class="main-nav" aria-label="القائمة الرئيسية">
+                <ul>
+                    <li><a href="#"> الرئيسية</a></li>
+                    <li><a href="#">عالم الثدييات</a></li>
+                    <li><a href="#">عجائب الطيور</a></li>
+                    <li><a href="#">أعماق البحار</a></li>
+                    <li><a href="#">مهددة بالانقراض</a></li>
+                    <li><a href="#">معرض الصور والفيديو</a></li>
+                    <li><a href="#">مدونة الحياة البرية </a></li>
+                    <li><a href="#">انضم إلينا / اتصل بنا</a></li>
+
+ 
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="darkmodeToggle" aria-label="التبديل بين الوضع المظلم والفاتح">
+                <i class="fas fa-moon"></i> <span id="themeText">الوضع المظلم</span>
+            </button>
+        </div>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="hero-section">
+                <h2>🐾 معلومات سريعة & سهلة</h2>
+                <p>استعرض بطاقات الثدييات الرائعة، كل بطاقة تحتوي على نبذة مختصرة بالعربية ورابط للموسوعة الحرة (ويكيبيديا) لمعرفة المزيد.</p>
+            </div>
+
+            <!-- شبكة البطاقات:  9 حيوانات  -->
+            <div class="cards-grid">
+                <!-- الأسد -->
+                <div class="animal-card">
+                    <div class="card-img">
+                        <img src="images/lion.jpg" alt="أسد" onerror="this.onerror=null;this.src='https://placehold.co/400x240?text=Lion+Image';">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="animal-name">🦁 الأسد</h3>
+                        <p class="description">الأسد  هو قط كبير يعيش في إفريقيا وأجزاء من الهند. يتميز بجسم عضلي قوي وذكاء اجتماعي، ويعيش ضمن مجموعات تُسمى "الزمر". يعد قمة السلسلة الغذائية.</p>
+                        <a href="https://ar.wikipedia.org/wiki/%D8%A3%D8%B3%D8%AF" target="_blank" rel="noopener noreferrer" class="read-more">اقرأ المزيد على ويكيبيديا <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                <!-- الفيل -->
+                <div class="animal-card">
+                    <div class="card-img">
+                        <img src="images/elephant.jpg" alt="فيل" onerror="this.onerror=null;this.src='https://placehold.co/400x240?text=Elephant+Image';">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="animal-name">🐘 الفيل الأفريقي</h3>
+                        <p class="description">أضخم حيوان بري على الأرض، يتميز بآذانه الكبيرة وخرطومه الطويل. يتمتع بذكاء حاد وروابط عائلية قوية ويساهم في توازن النظام البيئي.</p>
+                        <a href="https://ar.wikipedia.org/wiki/%D9%81%D9%8A%D9%84_%D8%A3%D9%81%D8%B1%D9%8A%D9%82%D9%8A" target="_blank" rel="noopener noreferrer" class="read-more">اقرأ المزيد على ويكيبيديا <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                <!-- الدلفين -->
+                <div class="animal-card">
+                    <div class="card-img">
+                        <img src="images/dolphin.jpg" alt="دلفين" onerror="this.onerror=null;this.src='https://placehold.co/400x240?text=Dolphin+Image';">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="animal-name">🐬 الدلفين</h3>
+                        <p class="description">الدلفين قاروري الأنف من أذكى الثدييات البحرية، يشتهر بسلوكه المرح وقدرته على تحديد المواقع بالصدى. يعيش في مجموعات اجتماعية متعاونة.</p>
+                        <a href="https://ar.wikipedia.org/wiki/%D8%AF%D9%84%D9%81%D9%8A%D9%86%D9%8A%D8%A7%D8%AA" target="_blank" rel="noopener noreferrer" class="read-more">اقرأ المزيد على ويكيبيديا <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                <!-- النمر البنغالي -->
+                <div class="animal-card">
+                    <div class="card-img">
+                        <img src="images/tiger.jpg" alt="نمر" onerror="this.onerror=null;this.src='https://placehold.co/400x240?text=Tiger+Image';">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="animal-name">🐅 النمر البنغالي</h3>
+                        <p class="description">أكبر السنوريات حجماً، يتميز بخطوطه السوداء على فرائه البرتقالي. يعيش في غابات آسيا وهو حيوان مفترس ماهر، لكنه مهدد بالانقراض.</p>
+                        <a href="https://ar.wikipedia.org/wiki/%D9%86%D9%85%D8%B1_%D8%A8%D9%86%D8%BA%D8%A7%D9%84%D9%8A" target="_blank" rel="noopener noreferrer" class="read-more">اقرأ المزيد على ويكيبيديا <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                <!-- الزرافة -->
+                <div class="animal-card">
+                    <div class="card-img">
+                        <img src="images/giraffe.jpg" alt="زرافة" onerror="this.onerror=null;this.src='https://placehold.co/400x240?text=Giraffe+Image';">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="animal-name">🦒 الزرافة</h3>
+                        <p class="description">أطول الثدييات على وجه الأرض، رقبتها الطويلة تساعدها على تناول أوراق الأشجار العالية. لكل زرافة نمط فريد من البقع.</p>
+                        <a href="https://ar.wikipedia.org/wiki/%D8%B2%D8%B1%D8%A7%D9%81%D8%A9" target="_blank" rel="noopener noreferrer" class="read-more">اقرأ المزيد على ويكيبيديا <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                <!-- الباندا العملاقة -->
+                <div class="animal-card">
+                    <div class="card-img">
+                        <img src="images/panda.jpg" alt="باندا" onerror="this.onerror=null;this.src='https://placehold.co/400x240?text=Panda+Image';">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="animal-name">🐼 الباندا العملاقة</h3>
+                        <p class="description">نوع من الدببة موطنها الصين، تتغذى بشكل أساسي على الخيزران. وهي رمز عالمي للحفاظ على الطبيعة بعد جهود إنقاذها من الانقراض.</p>
+                        <a href="https://ar.wikipedia.org/wiki/%D8%A8%D8%A7%D9%86%D8%AF%D8%A7_%D8%B9%D9%85%D9%84%D8%A7%D9%82%D8%A9" target="_blank" rel="noopener noreferrer" class="read-more">اقرأ المزيد على ويكيبيديا <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                <!-- حمار الزرد (Zebra) -->
+                <div class="animal-card">
+                    <div class="card-img">
+                        <img src="images/zebra.jpg" alt="حمار وحشي" onerror="this.onerror=null;this.src='https://placehold.co/400x240?text=Zebra+Image';">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="animal-name">🦓 الحمار الوحشي </h3>
+                        <p class="description">الحمار الوحشي المخطط يشتهر بخطوطه الفريدة بالأسود والأبيض، وكل فرد له نمط مختلف. يعيش في قطعان اجتماعية في سهول إفريقيا.</p>
+                        <a href="https://ar.wikipedia.org/wiki/%D8%AD%D9%85%D8%A7%D8%B1_%D9%88%D8%AD%D8%B4%D9%8A" target="_blank" rel="noopener noreferrer" class="read-more">اقرأ المزيد على ويكيبيديا <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                <!-- الخفاش-->
+                <div class="animal-card">
+                    <div class="card-img">
+                        <img src="images/bat.jpg" alt="خفاش" onerror="this.onerror=null;this.src='https://placehold.co/400x240?text=Bat+Image';">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="animal-name">🦇 الخفاش</h3>
+                        <p class="description">الخفافيش هي الثدييات الوحيدة القادرة على الطيران الحقيقي. تستخدم تحديد المواقع بالصدى للتنقل ليلاً، وتلعب دوراً مهماً في تلقيح النباتات ومكافحة الحشرات.</p>
+                        <a href="https://ar.wikipedia.org/wiki/%D8%AE%D9%81%D8%A7%D8%B4" target="_blank" rel="noopener noreferrer" class="read-more">اقرأ المزيد على ويكيبيديا <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                <!-- الذئب الرمادي  -->
+                <div class="animal-card">
+                    <div class="card-img">
+                        <img src="images/wolf.jpg" alt="ذئب رمادي" onerror="this.onerror=null;this.src='https://placehold.co/400x240?text=Wolf+Image';">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="animal-name">🐺 الذئب الرمادي</h3>
+                        <p class="description">الذئب الرمادي هو أكبر أفراد الكلاب البرية، يعيش في قطعان منظمة. يتميز بقدرته على التحمل وذكائه الجماعي، وله دور حيوي في النظم البيئية.</p>
+                        <a href="https://ar.wikipedia.org/wiki/%D8%B0%D8%A6%D8%A8_%D8%B1%D9%85%D8%A7%D8%AF%D9%8A" target="_blank" rel="noopener noreferrer" class="read-more">اقرأ المزيد على ويكيبيديا <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- استطلاع الرأي -->
+            <div class="poll-section">
+                <h3><i class="fas fa-chart-simple"></i> استطلاع رأي</h3>
+                <p>ما هي ثديياتك المفضلة من البطاقات أعلاه؟ شاركنا رأيك!</p>
+                <div class="poll-options" id="pollOptions">
+                    <label><input type="radio" name="favMammal" value="أسد"> 🦁 الأسد</label>
+                    <label><input type="radio" name="favMammal" value="فيل"> 🐘 الفيل</label>
+                    <label><input type="radio" name="favMammal" value="دلفين"> 🐬 الدلفين</label>
+                    <label><input type="radio" name="favMammal" value="نمر"> 🐅 النمر</label>
+                    <label><input type="radio" name="favMammal" value="زرافة"> 🦒 الزرافة</label>
+                    <label><input type="radio" name="favMammal" value="باندا"> 🐼 الباندا</label>
+                    <label><input type="radio" name="favMammal" value="خفاش"> 🦇 الخفاش</label>
+                    <label><input type="radio" name="favMammal" value="ذئب"> 🐺 الذئب الرمادي</label>
+                </div>
+                <button class="vote-btn" id="votePollBtn"><i class="fas fa-vote-yea"></i> تصويت</button>
+                <p id="pollFeedback" style="margin-top: 12px; font-size: 0.9rem; color: var(--accent);"></p>
+            </div>
+
+            <!-- حيوان هذا الشهر الأكثر تصويتاً (الباندا) -->
+            <div class="most-voted">
+                <h4><i class="fas fa-trophy"></i> حيوان هذا الشهر الأكثر تصويتاً <i class="fas fa-star"></i></h4>
+                <p>🐼 الباندا العملاقة 🐼</p>
+                <small style="display: block; margin-top: 0.7rem;">تم اختياره بناءً على أصوات المجتمع لشهر أبريل 2026</small>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>حيواناتي 🐾</h4>
+                    <p>مرجعك السريع| موقع تعليمي تفاعلي</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2026 </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            const toggleBtn = document.getElementById('darkmodeToggle');
+            const themeTextSpan = document.getElementById('themeText');
+            const rootElement = document.body;
+            const storedTheme = localStorage.getItem('mammalsTheme');
+            if (storedTheme === 'dark') {
+                rootElement.classList.add('dark');
+                if(themeTextSpan) themeTextSpan.innerText = 'الوضع الفاتح';
+                if(toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-sun"></i> <span id="themeText">الوضع الفاتح</span>';
+            } else if (storedTheme === 'light') {
+                rootElement.classList.remove('dark');
+                if(themeTextSpan) themeTextSpan.innerText = 'الوضع المظلم';
+                if(toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-moon"></i> <span id="themeText">الوضع المظلم</span>';
+            } else {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (prefersDark) {
+                    rootElement.classList.add('dark');
+                    if(themeTextSpan) themeTextSpan.innerText = 'الوضع الفاتح';
+                    if(toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-sun"></i> <span id="themeText">الوضع الفاتح</span>';
+                    localStorage.setItem('mammalsTheme', 'dark');
+                } else {
+                    rootElement.classList.remove('dark');
+                    localStorage.setItem('mammalsTheme', 'light');
+                }
+            }
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    const isDark = rootElement.classList.contains('dark');
+                    if (isDark) {
+                        rootElement.classList.remove('dark');
+                        localStorage.setItem('mammalsTheme', 'light');
+                        toggleBtn.innerHTML = '<i class="fas fa-moon"></i> <span id="themeText">الوضع المظلم</span>';
+                        if(themeTextSpan) themeTextSpan.innerText = 'الوضع المظلم';
+                    } else {
+                        rootElement.classList.add('dark');
+                        localStorage.setItem('mammalsTheme', 'dark');
+                        toggleBtn.innerHTML = '<i class="fas fa-sun"></i> <span id="themeText">الوضع الفاتح</span>';
+                        if(themeTextSpan) themeTextSpan.innerText = 'الوضع الفاتح';
+                    }
+                });
+            }
+        })();
+
+        const voteBtn = document.getElementById('votePollBtn');
+        const pollFeedback = document.getElementById('pollFeedback');
+        if(voteBtn) {
+            voteBtn.addEventListener('click', () => {
+                const selected = document.querySelector('input[name="favMammal"]:checked');
+                if(selected) {
+                    const animal = selected.value;
+                    pollFeedback.innerHTML = `✅ شكراً لك! ${animal} من أروع الثدييات. 🐾 تم تسجيل تصويتك بنجاح.`;
+                    setTimeout(() => {
+                        if(pollFeedback.innerHTML.includes('شكراً')) pollFeedback.style.opacity = '0.9';
+                    }, 2800);
+                } else {
+                    pollFeedback.innerHTML = `⚠️ الرجاء اختيار الحيوان المفضل لديك من الخيارات أعلاه.`;
+                    setTimeout(() => {
+                        if(pollFeedback.innerHTML.includes('الرجاء')) pollFeedback.innerHTML = '';
+                    }, 2700);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
